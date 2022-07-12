@@ -1,0 +1,36 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+#main {
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  transition: all 0.3s;
+  height: 100vh;
+  position: relative;
+}
+
+.point-items {
+  position: absolute;
+  bottom: 20px;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+.point-item {
+  padding: 10px;
+  border: 2px solid black;
+  border-radius: 50%;
+  width: 7px;
+  margin-left: 20px;
+  transition: 0.3s;
+}
+
+.point-item.selected {
+  border-color: #fff;
+  background-color: black;
+}
