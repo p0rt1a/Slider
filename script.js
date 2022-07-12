@@ -6,36 +6,54 @@ let imageList = [
   "rowan-heuvel-bjej8BY1JYQ-unsplash.jpg",
 ];
 
-let index = 0;
+let index = -1;
 
 let main = document.getElementById("main");
 let pointItems = document.querySelector(".point-items");
+let pointList = [];
 
-function changeImage() {
-  pointItems.children[index].classList.remove("selected");
-  index++;
-  if (index > imageList.length - 1) {
-    index = 0;
-  }
-  main.style.backgroundImage = `url(img/${imageList[index]})`;
-  pointItems.children[index].classList.add("selected");
+function slide(ind) {
+  main.style.backgroundImage = `url(img/${imageList[ind]})`;
+  clearSelected();
+  pointItems.children[ind].classList.add("selected");
 }
 
-function myCoroutine() {
+function clearSelected() {
+  for (let i = 0; i < imageList.length; i++) {
+    pointItems.children[i].classList.remove("selected");
+  }
+}
+
+function coroutine() {
   setTimeout(() => {
-    console.log("Image set");
-    changeImage();
-    myCoroutine();
-  }, 4000);
+    index++;
+    if (index >= imageList.length) {
+      index = 0;
+    }
+    slide(index);
+    coroutine();
+  }, 3000);
 }
 
 window.addEventListener("load", () => {
   for (let i = 0; i < imageList.length; i++) {
     let html = `
-            <div class="point-item"></div>
+            <a class="point-item"></a>
         `;
 
     pointItems.insertAdjacentHTML("beforeend", html);
   }
-  myCoroutine();
+  pointList = document.querySelectorAll(".point-item");
+  createPointerEvents();
+  coroutine();
 });
+
+function createPointerEvents() {
+  for (let i = 0; i < pointList.length; i++) {
+    pointList[i].addEventListener("click", () => {
+      let itemIndex = i;
+      index = itemIndex;
+      slide(itemIndex);
+    });
+  }
+}
